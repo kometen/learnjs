@@ -1,25 +1,212 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset='utf-8'>
+    <meta name='google-signin-client_id' content='185261552822-jdcs43131ip8bp8o0chpvv31vr525ig4.apps.googleusercontent.com'/>
     <title>Learn JS!</title>
     <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css'>
+    <script src='https://apis.google.com/js/platform.js' async defer></script>
     <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+    <script type="text/javascript" src="//connect.facebook.net/nn_NO/sdk.js#xfbml=1&version=v2.6&appId=571779042985543"></script>
     <script src='/vendor.js'></script>
     <script src='/app.js'></script>
     <style type="text/css" media="all">
-      body { margin-top: 30px; }
+        body { margin-top: 60px; }
+        .templates { display: none; }
+        .inline-list { margin-bottom: 0px; /* skeleton reset */ }
+        .inline-list li {
+            display: inline;
+            margin: 0 20px 0 0;
+        }
+        .fixed-top {
+            position: fixed;
+            top: 0px;
+            z-index: 1024;
+        }
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -moz-user-select: none;
+        }
+        .hover-links a { text-decoration: none; }
+        .hover-links a:hover { text-decoration: underline; }
+        .nav-container {
+            padding-left: 40px;
+            background: #666;
+        }
+        .nav-container a { color: white; }
+        .text-lg { font-size: 32px; }
+        .navbar-padding {
+            padding-top: 7px;
+            display: inline-block;
+        }
+        .navbar-padding-lg {
+            padding-top: 12px;
+            display: inline-block;
+        }
     </style>
-  </head>
-  <body>
-    <div class='container'>
-      <h1>It works!</h1>
-      <div>
-        <span>You're ready to start!</span>
-        <span>Skeleton 2, jQuery 2, and AWS Libraries are included.</span>
-      </div>
+</head>
+
+<body>
+    <script>
+        // This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            // The response object is returned with a status field that lets the
+            // app know the current login status of the person.
+            // Full docs on the response object can be found in the documentation
+            // for FB.getLoginStatus().
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                testAPI();
+            } else if (response.status === 'not_authorized') {
+                // The person is logged into Facebook, but not your app.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                'into this app.';
+            } else {
+                // The person is not logged into Facebook, so we're not sure if
+                // they are logged into this app or not.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                'into Facebook.';
+            }
+        }
+
+        // This function is called when someone finishes with the Login
+        // Button.  See the onlogin handler attached to it in the sample
+        // code below.
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '571779042985543',
+                xfbml      : true,
+                version    : 'v2.6'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            // In head section
+            //js.src = "//connect.facebook.net/nn_NO/sdk.js#xfbml=1&version=v2.6&appId=571779042985543";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        // Now that we've initialized the JavaScript SDK, we call 
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
+
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Here we run a very simple test of the Graph API after login is
+        // successful.  See statusChangeCallback() for when this call is made.
+        function testAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+            'Thanks for logging in, ' + response.name + '!';
+            });
+        }
+    </script>
+    <div class='markup'>
+        <div class='nav-container no-select fixed-top u-full-width'>
+            <ul class='inline-list hover-links nav-list six columns'>
+                <li><a class='text-lg' href=''>LearnJS</a></li>
+                <li><a href='#problem-1'>Start</a></li>
+            </ul>
+            <div class='three columns signin-bar'>
+                <span class='navbar-padding u-pull-right'>
+                    <span class='g-signin2' data-onsuccess='googleSignIn'></span>
+                </span>
+            </div>
+            <div class='one columns signin-fb-bar'>
+                <span class='navbar-padding u-pull-right'>
+                    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
+                </span>
+            </div>
+        </div>
+        <div class="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
+        <div class='view-container container'></div>
+        <div class='templates'>
+
+            <div class='landing-view'>
+                <div class='row'>
+                    <div class='one-half column'>
+                        <h3>Learn JS, bit by bit.</h3>
+                        <a href='#problem-1' class='button button-primary'>Start now!</a>
+                    </div>
+                    <div class='one-half column'>
+                        <img src='/images/HeroImage.jpg' />
+                    </div>
+                </div>
+            </div>
+
+            <div class='problem-view'>
+                <h3 class='title'></h3>
+                <p data-name='description'></p>
+                <pre><code data-name='code'></code></pre>
+                <form>
+                    <textarea class='u-full-width answer'></textarea>
+                    <div>
+                        <button class='button-primary check-btn'>Check Answer</button>
+                        <p class='result'></p>
+                    </div>
+                </form>
+            </div>
+
+            <li class='skip-btn'>
+                <a>Skip This Problem</a>
+            </li>
+
+            <div class='correct-flash'>
+                <span>Correct!</span> <a>Next Problem</a>
+            </div>
+
+            <div class='profile-view'>
+                <h3>Your Profile</h3>
+                <div class='email'></div>
+            </div>
+
+            <div class='profile-link navbar-padding-lg'>
+                <a href='#profile'></a>
+            </div>
+
+            <div class='fb-profile-link navbar-padding-fb'>
+                <a href='#fb-profile'></a>
+            </div>
+        </div>  <!-- end class='templates' -->
     </div>
-  </body>
+    <script type='text/javascript'>
+        $(window).ready(learnjs.appOnReady);
+    </script>
+</body>
+
 </html>
